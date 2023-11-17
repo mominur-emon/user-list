@@ -5,8 +5,28 @@ const userSlice = createSlice({
   initialState: {
     users: [],
   },
-  reducers: {},
+  reducers: {
+    showUser: (state, action) => {
+      state.users = action.payload;
+    },
+    addUser: (state, action) => {
+      state.users.push(action.payload);
+    },
+    updateUser: (state, action) => {
+      const { id, name, email, age } = action.payload;
+      const isExistUser = state.users.filter((user) => user.id === id);
+      if (isExistUser) {
+        isExistUser[0].name = name;
+        isExistUser[0].email = email;
+        isExistUser[0].age = age;
+      }
+    },
+    deleteUser: (state, action) => {
+      const id = action.payload;
+      state.users = state.users.filter((user) => user.id !== id);
+    },
+  },
 });
 
-export const {} = userSlice.actions;
+export const { showUser, addUser, updateUser, deleteUser } = userSlice.actions;
 export default userSlice.reducer;
